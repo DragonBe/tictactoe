@@ -1,45 +1,81 @@
 <?php
 class Grid
 {
-    protected $_grid;
+    const ROWS = 3;
+    const COLS = 3;
+    
+    protected $_rows = array ();
     
     public function __construct()
     {
-        $this->_grid = array (
-            array ('','',''),
-            array ('','',''),
-            array ('','',''),
-        );
+        for ($i = 0; $i < self::ROWS; $i++) {
+            $columns = array ();
+            for ($j = 0; $j < self::COLS; $j++) {
+                $columns[$j] = null;
+            }
+            $this->addRow($columns);
+        }
     }
-    public function write($row, $column, Player $player)
+    public function addRow(array $row)
     {
-        $this->_grid[$row][$column] = $player->getSymbol();
+        $this->_rows[] = $row;
+        return $this;
     }
-    public function inRows($symbol)
+    public function getRows()
     {
-        foreach ($this->_grid as $row) {
-            if ($symbol == $row[0] && $symbol == $row[1] && $symbol == $row[2]) {
+        return $this->_rows;
+    }
+    
+    public function setSymbol($row, $column, $symbol)
+    {
+//        if (!isset ($this->_grid[$row][$column])) {
+//            throw new OutOfBoundsException('Invalid position on this grid');
+//        }
+        $this->_rows[$row][$column] = $symbol;
+    }
+    
+    public function inRow($symbol)
+    {
+        foreach ($this->getRows() as $row) {
+            $match = 0;
+            foreach ($row as $column) {
+                if ($symbol === $column) {
+                    $match++;
+                }
+            }
+            if (self::ROWS === $match) {
                 return true;
-                break;
             }
         }
         return false;
     }
-    public function inColumns($symbol)
+    public function inColumn($symbol)
     {
-        for ($i = 0; $i < 3; $i++) {
-            if ($symbol == $this->_grid[0][$i] && $symbol == $this->_grid[1][$i] && $symbol == $this->_grid[2][$i]) {
+        for ($i = 0; $i < self::COLS; $i++) {
+            $match = 0;
+            for ($j = 0; $j < self::ROWS; $j++) {
+                if ($symbol === $this->_rows[$j][$i]) {
+                    $match++;
+                }
+            }
+            if (self::COLS === $match) {
                 return true;
-                break;
             }
         }
         return false;
     }
     public function inDiagonal($symbol)
     {
-        if ($symbol == $this->_grid[0][0] && $symbol == $this->_grid[1][1] && $symbol == $this->_grid[2][2]) {
-            return true;
-        } elseif ($symbol == $this->_grid[0][2] && $symbol == $this->_grid[1][1] && $symbol == $this->_grid[2][0]) {
+        $match1 = $match2 = 0;
+        for ($i = 0; $i < self::ROWS; $i++) {
+            if ($symbol === $this->_rows[$i][$i]) {
+                $match1++;
+            }
+            if ($symbol === $this->_rows[$i][self::COLS - 1 - $i]) {
+                $match2++;
+            }
+        }
+        if (self::ROWS === $match1 || self::ROWS === $match2) {
             return true;
         }
         return false;

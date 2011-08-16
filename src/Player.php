@@ -1,6 +1,9 @@
 <?php
 class Player
 {
+    const PLAYER_X = 'X';
+    const PLAYER_O = 'O';
+    
     protected $_symbol;
     
     public function __construct($symbol = null)

@@ -1,27 +1,56 @@
 <?php
+require_once 'Grid.php';
+require_once 'Players.php';
+require_once 'Player.php';
 class Tictactoe
 {
     const MAX_ROUNDS = 9;
-    const SYMBOL_X = 'X';
-    const SYMBOL_Y = 'Y';
     
     protected $_players;
     protected $_grid;
     
     public function __construct()
     {
-        $this->_players = array (
-            new Player(self::SYMBOL_X),
-            new Player(self::SYMBOL_Y),
-        );
-        $this->_grid = new Grid();
+        $this->setGrid(new Grid(3,3));
+        $this->setPlayers(new Players(array(
+            new Player(Player::PLAYER_X), new Player(Player::PLAYER_O))));
     }
-    public function play($row = 0, $column = 0, Player $player)
+    
+    public function setGrid(Grid $grid)
     {
-        $this->_grid->write($row, $column, $player);
+        $this->_grid = $grid;
+        return $this;
+    }
+    public function getGrid()
+    {
+        return $this->_grid;
+    }
+    public function setPlayers(Players $players)
+    {
+        $this->_players = $players;
+        return $this;
+    }
+    public function getPlayers()
+    {
+        return $this->_players;
+    }
+    
+    public function play($row, $column, Player $player)
+    {
+        $this->getGrid()->setSymbol($row, $column, $player->getSymbol());
+        return $this->isWinner($player);
     }
     public function isWinner(Player $player)
     {
-        
+        if ($this->getGrid()->inRow($player->getSymbol())) {
+            return true;
+        }
+        if ($this->getGrid()->inColumn($player->getSymbol())) {
+            return true;
+        }
+        if ($this->getGrid()->inDiagonal($player->getSymbol())) {
+            return true;
+        }
+        return false;
     }
 }
