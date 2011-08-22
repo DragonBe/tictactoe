@@ -38,8 +38,27 @@ class TictactoeTest extends PHPUnit_Framework_TestCase
     {
         $playerX = $this->_ttt->getPlayers()->seek(0)->current();
         $playerO = $this->_ttt->getPlayers()->seek(1)->current();
+        
+        $this->assertFalse($this->_ttt->play(0, 0, $playerX));
+        $this->assertFalse($this->_ttt->play(0, 1, $playerX));
+        $this->assertTrue($this->_ttt->play(0, 2, $playerX));
+        
+        $this->_ttt->setGrid(new Grid());
+        
         $this->assertFalse($this->_ttt->play(0, 0, $playerX));
         $this->assertFalse($this->_ttt->play(1, 0, $playerX));
+        $this->assertTrue($this->_ttt->play(2, 0, $playerX));
+        
+        $this->_ttt->setGrid(new Grid());
+        
+        $this->assertFalse($this->_ttt->play(0, 0, $playerX));
+        $this->assertFalse($this->_ttt->play(1, 1, $playerX));
+        $this->assertTrue($this->_ttt->play(2, 2, $playerX));
+        
+        $this->_ttt->setGrid(new Grid());
+        
+        $this->assertFalse($this->_ttt->play(0, 2, $playerX));
+        $this->assertFalse($this->_ttt->play(1, 1, $playerX));
         $this->assertTrue($this->_ttt->play(2, 0, $playerX));
     }
 }
