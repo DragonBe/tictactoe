@@ -1,7 +1,39 @@
 <?php
+/**
+ * TicTacToe
+ * 
+ * A simple game that's played with two players, each taking a turn by marking
+ * a field in a grid of 3 x 3 with either an X or an O (one symbol per player).
+ * Winner is the one who has 3 identical symbols in a single horizontal,
+ * vertical or diagonal row.
+ * 
+ * @package Tictactoe
+ * @license "Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)"
+ * @link http://creativecommons.org/licenses/by-sa/3.0/
+ */
+/**
+ * @see Grid
+ */
 require_once 'Grid.php';
+/**
+ * @see Players
+ */
 require_once 'Players.php';
+/**
+ * @see Player
+ */
 require_once 'Player.php';
+/**
+ * Tictactoe
+ * 
+ * This Tictactoe class is the main class that is used to play a game of
+ * tictactoe with 2 players in maximum 9 rounds.
+ * 
+ * @package Tictactoe
+ * @category Tictactoe
+ * @link http://en.wikipedia.org/wiki/Tic-tac-toe
+ *
+ */
 class Tictactoe
 {
     const MAX_ROUNDS = 9;

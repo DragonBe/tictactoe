@@ -13,19 +13,6 @@ class TictactoeTest extends PHPUnit_Framework_TestCase
         $this->_ttt = null;
         parent::tearDown();
     }
-    public function testGameGridIsSetAtStart()
-    {
-        $grid = $this->_ttt->getGrid();
-        $this->assertInstanceOf('Grid', $grid);
-        $this->assertEquals(3, count($grid->getRows()));
-        foreach ($grid->getRows() as $row) {
-            $this->assertInternalType('array', $row);
-            $this->assertEquals(3, count($row));
-            $this->assertNull($row[0]);
-            $this->assertNull($row[1]);
-            $this->assertNull($row[2]);
-        }
-    }
     public function testGamePlayersAreSetAtStart()
     {
         $players = $this->_ttt->getPlayers();
