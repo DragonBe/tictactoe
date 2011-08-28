@@ -57,9 +57,15 @@ class Player
      * 
      * @param string $symbol
      * @return Player
+     * @throws InvalidArgumentException
      */
     public function setSymbol($symbol)
     {
+        $validSymbols = array (self::PLAYER_O, self::PLAYER_X);
+        if (!in_array($symbol, $validSymbols)) {
+            throw new InvalidArgumentException(
+                'Player can only choose between X or O');
+        }
         $this->_symbol = (string) $symbol;
         return $this;
     }

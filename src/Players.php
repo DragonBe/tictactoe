@@ -26,6 +26,7 @@
  */
 class Players implements SeekableIterator, Countable
 {
+    const MAX_PLAYERS = 2;
     /**
      * Contains Player objects
      * 
@@ -63,9 +64,13 @@ class Players implements SeekableIterator, Countable
      * 
      * @param Player $player
      * @return Players
+     * @throw Overflow
      */
     public function addPlayer(Player $player)
     {
+        if (self::MAX_PLAYERS <= $this->count()) {
+            throw new OverflowException('Cannot add more Player objects');
+        }
         $this->_players[] = $player;
         return $this;
     }
