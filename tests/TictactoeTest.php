@@ -48,4 +48,23 @@ class TictactoeTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($this->_ttt->play(1, 1, $playerX));
         $this->assertTrue($this->_ttt->play(2, 0, $playerX));
     }
+    public function rowColProvider()
+    {
+        return array (
+            array (array (array (0,0), array (0,1), array (0,2))),
+            array (array (array (0,0), array (1,0), array (2,0))),
+            array (array (array (0,0), array (1,1), array (2,2))),
+            array (array (array (0,2), array (1,1), array (2,0))),
+        );
+    }
+    /**
+     * @dataProvider rowColProvider
+     */
+    public function testGameplayCanDetectWinner($rowCols)
+    {
+        $player = $this->_ttt->getPlayers()->seek(0)->current();
+        $this->assertFalse($this->_ttt->play($rowCols[0][0], $rowCols[0][1], $player));
+        $this->assertFalse($this->_ttt->play($rowCols[1][0], $rowCols[1][1], $player));
+        $this->assertTrue($this->_ttt->play($rowCols[2][0], $rowCols[2][1], $player));
+    }
 }
