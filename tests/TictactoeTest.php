@@ -21,33 +21,6 @@ class TictactoeTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(Player::PLAYER_X, $players->seek(0)->current()->getSymbol());
         $this->assertEquals(Player::PLAYER_O, $players->seek(1)->current()->getSymbol());
     }
-    public function testGameCanBePlayed()
-    {
-        $playerX = $this->_ttt->getPlayers()->seek(0)->current();
-        $playerO = $this->_ttt->getPlayers()->seek(1)->current();
-        
-        $this->assertFalse($this->_ttt->play(0, 0, $playerX));
-        $this->assertFalse($this->_ttt->play(0, 1, $playerX));
-        $this->assertTrue($this->_ttt->play(0, 2, $playerX));
-        
-        $this->_ttt->setGrid(new Grid());
-        
-        $this->assertFalse($this->_ttt->play(0, 0, $playerX));
-        $this->assertFalse($this->_ttt->play(1, 0, $playerX));
-        $this->assertTrue($this->_ttt->play(2, 0, $playerX));
-        
-        $this->_ttt->setGrid(new Grid());
-        
-        $this->assertFalse($this->_ttt->play(0, 0, $playerX));
-        $this->assertFalse($this->_ttt->play(1, 1, $playerX));
-        $this->assertTrue($this->_ttt->play(2, 2, $playerX));
-        
-        $this->_ttt->setGrid(new Grid());
-        
-        $this->assertFalse($this->_ttt->play(0, 2, $playerX));
-        $this->assertFalse($this->_ttt->play(1, 1, $playerX));
-        $this->assertTrue($this->_ttt->play(2, 0, $playerX));
-    }
     public function rowColProvider()
     {
         return array (
@@ -66,5 +39,17 @@ class TictactoeTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($this->_ttt->play($rowCols[0][0], $rowCols[0][1], $player));
         $this->assertFalse($this->_ttt->play($rowCols[1][0], $rowCols[1][1], $player));
         $this->assertTrue($this->_ttt->play($rowCols[2][0], $rowCols[2][1], $player));
+    }
+    public function testGameCanBePlayed()
+    {
+        $playerX = $this->_ttt->getPlayers()->seek(0)->current();
+        $playerO = $this->_ttt->getPlayers()->seek(1)->current();
+        $this->assertFalse($this->_ttt->play(0, 0, $playerX));
+        $this->assertFalse($this->_ttt->play(0, 1, $playerO));
+        $this->assertFalse($this->_ttt->play(1, 1, $playerX));
+        $this->assertFalse($this->_ttt->play(2, 2, $playerO));
+        $this->assertFalse($this->_ttt->play(1, 0, $playerX));
+        $this->assertFalse($this->_ttt->play(2, 0, $playerO));
+        $this->assertTrue($this->_ttt->play(1, 2, $playerX));
     }
 }
