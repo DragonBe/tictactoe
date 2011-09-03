@@ -51,5 +51,15 @@ class TictactoeTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($this->_ttt->play(1, 0, $playerX));
         $this->assertFalse($this->_ttt->play(2, 0, $playerO));
         $this->assertTrue($this->_ttt->play(1, 2, $playerX));
+        return $this->_ttt;
+    }
+    /**
+     * @depends testGameCanBePlayed
+     * @expectedException RuntimeException
+     */
+    public function testGameStopsAfterWinning($game)
+    {
+        $playerO = $game->getPlayers()->seek(1)->current();
+        $game->play(2,1, $playerO);
     }
 }
